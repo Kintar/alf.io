@@ -65,9 +65,9 @@ public final class PasswordGenerator {
     }
 
     public static String generateRandomPassword() {
-        if(DEV_MODE) {
-            return "abcd";
-        }
+//        if(DEV_MODE) {
+//            return "abcd";
+//        }
         Random r = new Random();
         int length = MIN_LENGTH + r.nextInt(MAX_LENGTH - MIN_LENGTH + 1);
         return RandomStringUtils.random(length, PASSWORD_CHARACTERS);
