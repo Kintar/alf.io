@@ -72,7 +72,8 @@
                 {{/fixPrice}}
                 {{^fixPrice}}
                     <input name="additionalService[{{index}}].additionalServiceId" value="{{id}}" type="hidden">
-                    <input type="number" min="0" step="any" name="additionalService[{{index}}].amount" class="form-control" title="" value="0">
+                    <label style="display: inline-block; width: 10%; text-align: right;" for="additionalService[{{index}}].amount">$</label>
+                    <input type="number" min="0" step="any" name="additionalService[{{index}}].amount" class="form-control" style="display: inline-block; width: 85%" title="" value="0">
                 {{/fixPrice}}
             {{/saleable}}
             {{^saleable}}
