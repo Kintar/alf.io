@@ -1,0 +1,6 @@
+docker build -t mlt-tickets .
+docker tag mlt-tickets:latest 840861411173.dkr.ecr.us-east-2.amazonaws.com/mlt-tickets:latest
+docker push 840861411173.dkr.ecr.us-east-2.amazonaws.com/mlt-tickets:latest
+
+docker run --restart=always --name=alfio-web -p 8000:8000 -d 840861411173.dkr.ecr.us-east-2.amazonaws.com/mlt-tickets:latest
+
