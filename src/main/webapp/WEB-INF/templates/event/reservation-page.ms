@@ -350,7 +350,7 @@
                     {{#i18n}}reservation-page.paypal.confirm-button{{/i18n}}
                 {{/paypalCheckoutConfirmation}}
                 {{^paypalCheckoutConfirmation}}
-                    {{#i18n}}reservation-page.pay{{/i18n}} {{orderSummary.totalPrice}} {{event.currency}}
+                    Confirm Reservation
                 {{/paypalCheckoutConfirmation}}
                 </button>
             </div>
