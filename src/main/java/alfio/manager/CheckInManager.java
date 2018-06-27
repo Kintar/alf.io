@@ -59,7 +59,6 @@ import java.util.stream.Collectors;
 
 import static alfio.manager.support.CheckInStatus.*;
 import static alfio.model.system.ConfigurationKeys.*;
-import static alfio.util.OptionalWrapper.optionally;
 
 @Component
 @Transactional
@@ -78,6 +77,7 @@ public class CheckInManager {
     private final OrganizationRepository organizationRepository;
     private final UserRepository userRepository;
     private final TicketReservationManager ticketReservationManager;
+    private final ExtensionManager extensionManager;
 
 
     private void checkIn(String uuid) {
@@ -85,6 +85,7 @@ public class CheckInManager {
         Validate.isTrue(ticket.getStatus() == TicketStatus.ACQUIRED);
         ticketRepository.updateTicketStatusWithUUID(uuid, TicketStatus.CHECKED_IN.toString());
         ticketRepository.toggleTicketLocking(ticket.getId(), ticket.getCategoryId(), true);
+        extensionManager.handleTicketCheckedIn(ticketRepository.findByUUID(uuid));
     }
 
     private void acquire(String uuid) {
@@ -148,6 +149,7 @@ public class CheckInManager {
                 ticketRepository.updateTicketStatusWithUUID(ticketIdentifier, revertedStatus.toString());
                 scanAuditRepository.insert(ticketIdentifier, eventId, ZonedDateTime.now(), user, OK_READY_TO_BE_CHECKED_IN, ScanAudit.Operation.REVERT);
                 auditingRepository.insert(t.getTicketsReservationId(), userRepository.findIdByUserName(user).orElse(null), eventId, Audit.EventType.REVERT_CHECK_IN, new Date(), Audit.EntityType.TICKET, Integer.toString(t.getId()));
+                extensionManager.handleTicketRevertCheckedIn(ticketRepository.findByUUID(ticketIdentifier));
                 return true;
             }
             return false;
@@ -281,14 +283,14 @@ public class CheckInManager {
     }
 
     public List<Integer> getAttendeesIdentifiers(int eventId, Date changedSince, String username) {
-        return optionally(() -> eventRepository.findById(eventId))
+        return eventRepository.findOptionalById(eventId)
             .filter(EventManager.checkOwnership(username, organizationRepository))
             .map(event -> ticketRepository.findAllAssignedByEventId(event.getId(), changedSince))
             .orElse(Collections.emptyList());
     }
 
     public List<FullTicketInfo> getAttendeesInformation(int eventId, List<Integer> ids, String username) {
-        return optionally(() -> eventRepository.findById(eventId))
+        return eventRepository.findOptionalById(eventId)
             .filter(EventManager.checkOwnership(username, organizationRepository))
             .map(event -> ticketRepository.findAllFullTicketInfoAssignedByEventId(event.getId(), ids))
             .orElse(Collections.emptyList());

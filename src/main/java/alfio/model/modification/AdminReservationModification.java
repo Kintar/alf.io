@@ -48,7 +48,7 @@ public class AdminReservationModification implements Serializable {
                                         @JsonProperty("customerData") CustomerData customerData,
                                         @JsonProperty("ticketsInfo") List<TicketsInfo> ticketsInfo,
                                         @JsonProperty("language") String language,
-                                        @JsonProperty("updateContactData") boolean updateContactData,
+                                        @JsonProperty("updateContactData") Boolean updateContactData,
                                         @JsonProperty("notification") Notification notification) {
         this.expiration = expiration;
         this.customerData = customerData;
@@ -65,18 +65,27 @@ public class AdminReservationModification implements Serializable {
         private final String emailAddress;
         private final String billingAddress;
         private final String userLanguage;
+        private final String customerReference;
+        private final String vatNr;
+        private final String vatCountryCode;
 
         @JsonCreator
         public CustomerData(@JsonProperty("firstName") String firstName,
                             @JsonProperty("lastName") String lastName,
                             @JsonProperty("emailAddress") String emailAddress,
                             @JsonProperty("billingAddress") String billingAddress,
-                            @JsonProperty("userLanguage") String userLanguage) {
+                            @JsonProperty("userLanguage") String userLanguage,
+                            @JsonProperty("customerReference") String customerReference,
+                            @JsonProperty("vatNr") String vatNr,
+                            @JsonProperty("vatCountryCode") String vatCountryCode) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.emailAddress = emailAddress;
             this.billingAddress = billingAddress;
             this.userLanguage = userLanguage;
+            this.customerReference = customerReference;
+            this.vatNr = vatNr;
+            this.vatCountryCode = vatCountryCode;
         }
 
         public String getFullName() {
@@ -207,7 +216,10 @@ public class AdminReservationModification implements Serializable {
                 placeholderIfNotEmpty(in.lastName),
                 placeholderIfNotEmpty(in.emailAddress),
                 placeholderIfNotEmpty(in.billingAddress),
-                placeholderIfNotEmpty(in.userLanguage));
+                placeholderIfNotEmpty(in.userLanguage),
+                placeholderIfNotEmpty(in.customerReference),
+                placeholderIfNotEmpty(in.vatNr),
+                placeholderIfNotEmpty(in.vatCountryCode));
         }
         else return null;
     }

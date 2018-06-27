@@ -16,7 +16,6 @@
  */
 package alfio.manager;
 
-import alfio.manager.plugin.PluginManager;
 import alfio.manager.system.ConfigurationManager;
 import alfio.model.Event;
 import alfio.model.Ticket;
@@ -60,10 +59,10 @@ public class WaitingQueueManagerTest {{
         TemplateManager templateManager = it.usesMock(TemplateManager.class);
         MessageSource messageSource = it.usesMock(MessageSource.class);
         OrganizationRepository organizationRepository = it.usesMock(OrganizationRepository.class);
-        PluginManager pluginManager = it.usesMock(PluginManager.class);
         EventRepository eventRepository = it.usesMock(EventRepository.class);
+        ExtensionManager extensionManager = it.usesMock(ExtensionManager.class);
 
-        WaitingQueueManager manager = new WaitingQueueManager(waitingQueueRepository, ticketRepository, ticketCategoryRepository, configurationManager, eventStatisticsManager, jdbc, notificationManager, templateManager, messageSource, organizationRepository, pluginManager, eventRepository);
+        WaitingQueueManager manager = new WaitingQueueManager(waitingQueueRepository, ticketRepository, ticketCategoryRepository, configurationManager, eventStatisticsManager, jdbc, notificationManager, templateManager, messageSource, organizationRepository, eventRepository, extensionManager);
         String reservationId = "reservation-id";
         it.should("handle a reservation confirmation", expect -> {
             manager.fireReservationConfirmed(reservationId);

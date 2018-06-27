@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="_csrf" content="{{_csrf.token}}"/>
     <meta name="_csrf_header" content="{{_csrf.headerName}}"/>
-    <link rel="stylesheet" href="{{request.contextPath}}/resources/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{request.contextPath}}/resources/css/bootstrap-admin.min.css" />
     <link rel="stylesheet" href="{{request.contextPath}}/resources/bower_components/chartist/dist/chartist.min.css">
     <link rel="stylesheet" href="{{request.contextPath}}/resources/bower_components/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.css">
     <link rel="stylesheet" href="{{request.contextPath}}/resources/css/admin.css" />
@@ -43,7 +43,6 @@
     <script src="{{request.contextPath}}/resources/js/admin/service/resource-service.js"></script>
     <script src="{{request.contextPath}}/resources/js/admin/service/organization.service.js"></script>
     <script src="{{request.contextPath}}/resources/js/admin/service/user.service.js"></script>
-    <script src="{{request.contextPath}}/resources/js/admin/feature/plugin/plugin-log.js"></script>
     <script src="{{request.contextPath}}/resources/js/admin/feature/email/email-log.js"></script>
     <script src="{{request.contextPath}}/resources/js/admin/feature/util/file-upload.js"></script>
 
@@ -83,6 +82,12 @@
     <script src="{{request.contextPath}}/resources/js/admin/feature/tickets-list/tickets-list.js"></script>
     <script src="{{request.contextPath}}/resources/js/admin/feature/label-template/label-template.js"></script>
 
+    <script src="{{request.contextPath}}/resources/js/admin/feature/extension/extension.js"></script>
+    <script src="{{request.contextPath}}/resources/js/admin/feature/extension/extension.service.js"></script>
+    <script src="{{request.contextPath}}/resources/js/admin/feature/extension/add-update/extension-add-update.js"></script>
+    <script src="{{request.contextPath}}/resources/js/admin/feature/extension/log/extension-log.js"></script>
+    <script src="{{request.contextPath}}/resources/js/admin/feature/ticket-category/ticket-category.js"></script>
+
     <link rel="stylesheet" href="{{request.contextPath}}/resources/js/admin/feature/reservation/create/reservation-create.css" />
 
     <script type="text/javascript" src="{{request.contextPath}}/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -114,6 +119,7 @@
                                 <li data-ui-sref-active="active"><a data-ui-sref="organizations" ng-click="ctrl.menuCollapsed = true">Organizations</a></li>
                                 <li data-ui-sref-active="active"><a data-ui-sref="users" ng-click="ctrl.menuCollapsed = true">Users</a></li>
                                 <li data-ui-sref-active="active"><a data-ui-sref="configuration.system" ng-click="ctrl.menuCollapsed = true">Configuration</a></li>
+                                <li data-ui-sref-active="active"><a data-ui-sref="extension.list" ng-click="ctrl.menuCollapsed = true">Extension</a></li>
                                 {{/isOwner}}
                             </ul>
                             <ul class="nav navbar-nav visible-sm visible-xs" ng-if="ctrl.eventName">
@@ -150,9 +156,6 @@
                                 <li role="presentation" data-ui-sref-active="active">
                                     <a data-ui-sref="events.single.email-log({eventName:ctrl.eventName})" ng-click="ctrl.menuCollapsed = true"><i class="fa fa-paper-plane-o"></i> E-mail log</a>
                                 </li>
-                                <li role="presentation" data-ui-sref-active="active">
-                                    <a data-ui-sref="events.single.plugin-log({eventName:ctrl.eventName})" ng-click="ctrl.menuCollapsed = true"><i class="fa fa-plug"></i> Plugins log</a>
-                                </li>
                             </ul>
                             <ul class="nav navbar-nav visible-sm visible-xs">
                                 <li class="nav-divider"></li>
@@ -163,7 +166,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="navbar-right hidden-xs">
+                    <div class="navbar-right hidden-sm hidden-xs">
                         <ul class="nav navbar-nav">
                             <li role="presentation" class="navbar-text"><i class="fa fa-user"></i> Logged in as {{username}}</li>
                             <li role="presentation" data-ui-sref-active="active"> <a data-ui-sref="edit-current-user" title="click to update account details"><i class="fa fa-edit"></i> edit account</a></li>
